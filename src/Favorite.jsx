@@ -14,7 +14,6 @@ const Favorite = () => {
 
   const [favorites, setFavorites] = useState({ id: [] })
   const [data, setData] = useState([])
-  const [quantity, setQuantity] = useState({})
 
   const productImages = [
     "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=500",
@@ -74,20 +73,6 @@ const Favorite = () => {
     setData(data.filter(el => el.id !== id))
   }
 
-  function increase(id) {
-    setQuantity({
-      ...quantity,
-      [id]: (quantity[id] || 1) + 1
-    })
-  }
-
-  function decrease(id) {
-    setQuantity({
-      ...quantity,
-      [id]: Math.max(1, (quantity[id] || 1) - 1)
-    })
-  }
-
   return (
     <div className="p-[40px]">
 
@@ -101,7 +86,6 @@ const Favorite = () => {
           <tr className="border-b">
             <th className="text-left p-4">Products</th>
             <th className="text-left p-4">Price</th>
-            <th className="text-left p-4">Quantity</th>
             <th className="text-left p-4">Delete</th>
           </tr>
         </thead>
@@ -126,31 +110,11 @@ const Favorite = () => {
                 {el.price} {el.currency}
               </td>
 
-              <td className="p-4">
-                <div className="flex items-center gap-3">
 
-                  <button
-                    onClick={() => decrease(el.id)}
-                    className="bg-gray-200 px-3 py-1 rounded"
-                  >
-                    -
-                  </button>
-
-                  <span>{quantity[el.id] || 1}</span>
-
-                  <button
-                    onClick={() => increase(el.id)}
-                    className="bg-gray-200 px-3 py-1 rounded"
-                  >
-                    +
-                  </button>
-
-                </div>
-              </td>
 
               <td className="p-4">
                 <Trash2
-                  className="cursor-pointer hover:text-red-500"
+                  className="cursor-pointer hover:text-red-500 "
                   onClick={() => deleteFavorite(el.id)}
                 />
               </td>
@@ -160,8 +124,6 @@ const Favorite = () => {
         </tbody>
 
       </table>
-
-
     </div>
   )
 }
