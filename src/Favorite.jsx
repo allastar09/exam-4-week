@@ -161,11 +161,6 @@ const Favorite = () => {
 
       </table>
 
-      
-        <p className="text-center text-gray-400 mt-10">
-          Your favorites list is empty.
-        </p>
-
 
     </div>
   )
