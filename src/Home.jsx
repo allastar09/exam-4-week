@@ -1,10 +1,12 @@
-
 import React, { useEffect, useState } from 'react'
 import rastenie from './assets/rastenie.png'
 import axios from 'axios'
 import { Heart, ShoppingCart } from 'lucide-react'
+import { useNavigate } from 'react-router'
 
 const Home = () => {
+
+  const navigate = useNavigate()
 
   const productImages = [
     "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=500",
@@ -67,31 +69,31 @@ const Home = () => {
     getProducts()
   }, [page, selectedCategory])
 
- async function addFavorite(productId) {
-  try {
-    let favoriteResponse = JSON.parse(localStorage.getItem('favoriteResponse')) || { id: [] }
+  async function addFavorite(productId) {
+    try {
+      let favoriteResponse = JSON.parse(localStorage.getItem('favoriteResponse')) || { id: [] }
 
-    favoriteResponse.id.push(productId)
+      favoriteResponse.id.push(productId)
 
-    localStorage.setItem('favoriteResponse',JSON.stringify(favoriteResponse))
+      localStorage.setItem('favoriteResponse',JSON.stringify(favoriteResponse))
 
-  } catch (error) {
-    console.log('Error adding favorite:', error)
+    } catch (error) {
+      console.log('Error adding favorite:', error)
+    }
   }
-}
 
-async function addCart(productId) {
-  try {
-    let cartResponse = JSON.parse(localStorage.getItem('cartResponse')) || { id: [] }
+  async function addCart(productId) {
+    try {
+      let cartResponse = JSON.parse(localStorage.getItem('cartResponse')) || { id: [] }
 
-    cartResponse.id.push(productId)
+      cartResponse.id.push(productId)
 
-    localStorage.setItem('cartResponse', JSON.stringify(cartResponse))
+      localStorage.setItem('cartResponse', JSON.stringify(cartResponse))
 
-  } catch (error) {
-    console.log('Error adding cart:', error)
+    } catch (error) {
+      console.log('Error adding cart:', error)
+    }
   }
-}
 
   return (
     <div>
@@ -180,7 +182,8 @@ async function addCart(productId) {
             {products.map((el, index) => (
               <div
                 key={el.id}
-                className='w-[258px] min-h-[300px] flex flex-col gap-[15px] p-[15px] hover:shadow-lg transition'
+                onClick={() => navigate(`/product/${el.id}`, { state: el })}
+                className='w-[258px] min-h-[300px] flex flex-col gap-[15px] p-[15px] hover:shadow-lg transition cursor-pointer'
               >
 
                 <img
@@ -202,15 +205,21 @@ async function addCart(productId) {
                   <Heart
                     size={25}
                     className='cursor-pointer hover:text-green-500'
-                     onClick={() => addFavorite(el.id)}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      addFavorite(el.id)
+                    }}
                   />
 
                   <button
-  onClick={() => addCart(el.id)}
-  className='bg-green-500 text-white p-2 rounded-md hover:bg-green-600'
->
-  <ShoppingCart size={22} />
-</button>
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      addCart(el.id)
+                    }}
+                    className='bg-green-500 text-white p-2 rounded-md hover:bg-green-600'
+                  >
+                    <ShoppingCart size={22} />
+                  </button>
 
                 </div>
 

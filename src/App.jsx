@@ -6,6 +6,7 @@ import Home from './Home';
 import Login from './Login';
 import Favorite from './Favorite';
 import Cart from './Cart';
+import Product from './Products';
 
   function App() {
 
@@ -28,6 +29,10 @@ import Cart from './Cart';
         {
           path: 'cart',
           element: <Cart />
+        },
+        {
+          path: 'product/:id',
+          element: <Product />
         }
       ]
     }
